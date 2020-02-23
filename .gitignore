@@ -1,2 +1,4 @@
 /.vscode
 /backbone/datasets
+/backbone/__pycache__
+/images
