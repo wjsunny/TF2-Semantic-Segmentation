@@ -48,11 +48,11 @@ def vgg16(input_shape=(224, 224, 3), include_top = True, classes = 1000, pretrai
 
     if pretrained == 'imagenet':
         if include_top:
-            weights_path = tf.keras.utils.get_file('vgg16_weights_tf_dim_ordering_tf_kernels.h5', URL_WEIGHTS, cache_dir = './backbone')
+            weights_path = tf.keras.utils.get_file('vgg16_weights_tf_dim_ordering_tf_kernels.h5', URL_WEIGHTS, cache_dir = './model/backbone')
             print(weights_path)
             model.load_weights(weights_path)
         else:
-            weights = tf.keras.utils.get_file('vgg16_weights_tf_dim_ordering_tf_kernels_notop.h5', URL_WEIGHTS_NO_TOP, cache_dir = './backbone')
+            weights = tf.keras.utils.get_file('vgg16_weights_tf_dim_ordering_tf_kernels_notop.h5', URL_WEIGHTS_NO_TOP, cache_dir = './model/backbone')
             model.load_weights(weights)
     elif not pretrained == None:
         model.load_weights(pretrained)
