@@ -15,7 +15,7 @@ image = preprocessing_img(image)
 
 
 model_f = vgg16.vgg16(input_shape=(224, 224, 3))
-# model_s = vgg16.vgg16_subclass()
+# model_s = vgg16_subclass.vgg16()
 model_k = VGG16()
 
 predictions_f = model_f.predict(image)
@@ -29,9 +29,9 @@ label_k = decode_predictions(predictions_k)
 
 print('---'*50)
 print('Model_use_FuncAPI: ',label_f[0][:3])
-print('---'*50)
-# print('Model_use_Subclass: ',label_s[0][:3])
 # print('---'*50)
+# print('Model_use_Subclass: ',label_s[0][:3])
+print('---'*50)
 print('Model_by_keras: ',label_k[0][:3])
 
 
