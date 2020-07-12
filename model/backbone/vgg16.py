@@ -8,7 +8,7 @@ URL_WEIGHTS = 'https://github.com/fchollet/deep-learning-models/releases/downloa
 URL_WEIGHTS_NO_TOP = 'https://github.com/fchollet/deep-learning-models/releases/download/v0.1/vgg16_weights_tf_dim_ordering_tf_kernels_notop.h5'
 
 
-def vgg16(input_shape=(224, 224, 3), include_top = True, classes = 1000, pretrained = 'imagenet'):
+def vgg16(classes = 1000, input_shape=(224, 224, 3), include_top = True, pretrained = 'imagenet'):
     inputs = layers.Input(shape = input_shape)
     #Block 1
     x = layers.Conv2D(64, (3,3), activation = 'relu', padding = 'same', name = 'block1_conv1', data_format = IMAGE_FORMAT)(inputs)
@@ -58,6 +58,8 @@ def vgg16(input_shape=(224, 224, 3), include_top = True, classes = 1000, pretrai
         model.load_weights(pretrained)
     
     return model
+
+
 if __name__ == "__main__":
-    model = vgg16((224,224,3))
+    model = vgg16(input_shape=(224,224,3))
     model.summary()
