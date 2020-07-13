@@ -6,7 +6,7 @@ import tensorflow as tf
 IMAGE_FORMAT = 'channels_last'
 
 def fcn_32(classes, backbone_name='vgg16', input_shape=(224,224)):
-    backbone, layer_name = Backbones.get_encoder(name = backbone_name)
+    backbone = Backbones.get_encoder(name = backbone_name)
     input = backbone.input
     x = backbone.output
     
@@ -21,5 +21,5 @@ def fcn_32(classes, backbone_name='vgg16', input_shape=(224,224)):
     x = layers.Conv2DTranspose(classes, (64, 64), (32, 32), 
         use_bias=False, data_format=IMAGE_FORMAT)(x)
     x = layers.Activation('softmax')(x)
-    
+
     return tf.keras.Model(input, x)
