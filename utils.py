@@ -4,32 +4,53 @@ import matplotlib.pyplot as plt
 from PIL import Image
 import numpy as np
 
-def load_image(path, resize = None, resample = 'nearest'):
-    assert type(path) == str, "path to images must be string"
+# def load_image(path, resize = None, resample = 'nearest'):
+#     assert type(path) == str, "path to images must be string"
 
-    BGR = cv2.imread(path)
-    out_img = cv2.cvtColor(BGR, cv2.COLOR_BGR2RGB)
+#     BGR = cv2.imread(path)
+#     out_img = cv2.cvtColor(BGR, cv2.COLOR_BGR2RGB)
+#     if resize is not None:
+#         assert type(resize) == tuple, "resize must be tuple ex:(width, high)"
+
+#         if resample == 'nearest':
+#             _interpolation = cv2.INTER_NEAREST
+#         elif resample == 'bilinear':
+#             _interpolation = cv2.INTER_LINEAR
+#         elif resample == 'bicubic':
+#             _interpolation = cv2.INTER_CUBIC
+#         elif resample == 'lanczos':
+#             _interpolation = cv2.INTER_LANCZOS4
+#         else:
+#             _interpolation = cv2.INTER_AREA
+        
+#         out_img = cv2.resize(out_img, (resize[0],resize[1]), interpolation = _interpolation)
+        
+#     return out_img
+
+def load_image(path, resize=None, resample = 'nearest'):
+    img = Image.open(path)
+    img_copy = img.copy()
     if resize is not None:
         assert type(resize) == tuple, "resize must be tuple ex:(width, high)"
 
         if resample == 'nearest':
-            _interpolation = cv2.INTER_NEAREST
+            _interpolation = Image.NEAREST
         elif resample == 'bilinear':
-            _interpolation = cv2.INTER_LINEAR
+            _interpolation = Image.BILINEAR
         elif resample == 'bicubic':
-            _interpolation = cv2.INTER_CUBIC
+            _interpolation = Image.BICUBIC
         elif resample == 'lanczos':
-            _interpolation = cv2.INTER_LANCZOS4
-        else:
-            _interpolation = cv2.INTER_AREA
+            _interpolation = Image.LANCZOS
         
-        out_img = cv2.resize(out_img, (resize[0],resize[1]), interpolation = _interpolation)
+        out_img = img_copy.resize(resize, resample = _interpolation)
         
     return out_img
 
 def image_to_array(img):
     out_arr = np.asarray(img, dtype='float32')
+    print(out_arr.shape)
     out_arr = np.expand_dims(out_arr, axis=0)
+    print(out_arr.shape)
     
     return out_arr
 
