@@ -1,5 +1,5 @@
 from __future__ import absolute_import, division, print_function
-from backbone.all_backbone import Backbones
+from .backbone.all_backbone import Backbones
 from tensorflow.keras import layers
 import tensorflow as tf
 

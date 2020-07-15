@@ -3,3 +3,4 @@
 /model/backbone/__pycache__
 /images
 /__pycache__
+/crop_images.py

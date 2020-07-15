@@ -1,5 +1,6 @@
+from __future__ import absolute_import, division, print_function
 #from resnet import *
-from model.backbone.vgg16 import vgg16
+from .vgg16 import vgg16
 
 class BackbonesFactory:
     model = {
