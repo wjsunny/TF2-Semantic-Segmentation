@@ -27,7 +27,7 @@ def _remove_cmap_arr(img_seg):
     label = np.zeros((img_seg.shape[0], img_seg.shape[1]), dtype=np.uint8)
 
     for c, i in palette.items():
-        m = np.all(img_seg == np.array(c).reshape(1, 1, 3), axis=2)
+        m = np.all(img_seg == np.asarray(c).reshape(1, 1, 3), axis=2)
         label[m] = i
 
     return label
@@ -64,13 +64,13 @@ if __name__ == "__main__":
     mask_dir = './images/mask_test'
     new_mask_dir = './images/mask_test_rm_cmap'
 
-    # make_remove_cmap(mask_dir, new_mask_dir)
+    make_remove_cmap(mask_dir, new_mask_dir)
     
-    # im_cv = cv2.imread(img_dir, 1)
-    # print(im_cv.shape)
-    # cv2.imshow('image',im_cv)
-    # cv2.waitKey(0)
-    # cv2.destroyAllWindows()
+    im_cv = cv2.imread(img_dir, 1)
+    print(im_cv.shape)
+    cv2.imshow('image',im_cv)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
     seg_arr = get_seg_arr(img_dir, 6, 480, 270)
     print(seg_arr.shape)
