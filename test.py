@@ -16,7 +16,7 @@ image = preprocessing_img(image)
 
 
 model_f = Backbones.get_encoder(name = 'vgg16')
-model_f = model_f(input_shape = (224, 224, 3))
+#model_f = model_f(input_shape = (224, 224, 3))
 # model_f = vgg16.vgg16(input_shape=(224, 224, 3))
 # # model_s = vgg16_subclass.vgg16()
 model_k = VGG16()
