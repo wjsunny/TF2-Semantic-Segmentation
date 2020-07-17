@@ -1,8 +1,9 @@
 from __future__ import absolute_import, division, print_function
 import tensorflow as tf
 from tensorflow.keras import layers
+import config
 
-IMAGE_FORMAT = 'channels_last'
+IMAGE_FORMAT = config.IMAGE_ORDERING
 
 URL_WEIGHTS = 'https://github.com/fchollet/deep-learning-models/releases/download/v0.1/vgg16_weights_tf_dim_ordering_tf_kernels.h5'
 URL_WEIGHTS_NO_TOP = 'https://github.com/fchollet/deep-learning-models/releases/download/v0.1/vgg16_weights_tf_dim_ordering_tf_kernels_notop.h5'
