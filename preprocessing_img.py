@@ -33,8 +33,8 @@ def _remove_cmap_arr(img_seg):
     return label
 
 
-def make_remove_cmap(label_dir, new_label_dir):
-
+def make_remove_cmap(label_dir):
+    new_label_dir = label_dir + '_rm_cmap'
     if not os.path.isdir(new_label_dir):
         print("creating folder: ", new_label_dir)
         os.mkdir(new_label_dir)
@@ -42,12 +42,15 @@ def make_remove_cmap(label_dir, new_label_dir):
     label_files = os.listdir(label_dir)
 
     for l_f in tqdm(label_files):
-        arr = np.array(Image.open(os.path.join(label_dir, l_f)))
+        arr_bgr = cv2.imread(os.path.join(label_dir, l_f))
+        arr = cv2.cvtColor(arr_bgr, cv2.COLOR_BGR2RGB)
+        #arr = np.array(Image.open(os.path.join(label_dir, l_f)))
         arr = arr[:,:,0:3]
         arr_2d = _remove_cmap_arr(arr)
-        Image.fromarray(arr_2d).save(os.path.join(new_label_dir, l_f))
+        #Image.fromarray(arr_2d).save(os.path.join(new_label_dir, l_f))
+        cv2.imwrite(os.path.join(new_label_dir, l_f), arr_2d)
 
-def get_seg_arr(img_input, classes, w, h):
+def get_seg_arr(img_input, classes, w, h, no_reshape=False):
 
     seg_labels = np.zeros((h, w, classes))
     im_cv = cv2.imread(img_input)
@@ -56,15 +59,17 @@ def get_seg_arr(img_input, classes, w, h):
     for c in range(classes):
         seg_labels[:, :, c] = (im_cv == c).astype(int)
 
+    if not no_reshape:
+        seg_labels = np.reshape(seg_labels, (w*h, classes))
+
     return seg_labels
 
 
 if __name__ == "__main__":
     img_dir = './images/mask_test_rm_cmap/mask_test.png'
     mask_dir = './images/mask_test'
-    new_mask_dir = './images/mask_test_rm_cmap'
 
-    make_remove_cmap(mask_dir, new_mask_dir)
+    make_remove_cmap(mask_dir)
     
     im_cv = cv2.imread(img_dir, 1)
     print(im_cv.shape)
@@ -72,5 +77,9 @@ if __name__ == "__main__":
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
+    # pil = Image.open(img_dir)
+    # pil.show()
+    # pil_np = np.array(pil)
+    # print(pil_np.shape)
     seg_arr = get_seg_arr(img_dir, 6, 480, 270)
-    print(seg_arr.shape)
+    #print(seg_arr.shape)
