@@ -4,47 +4,52 @@ import matplotlib.pyplot as plt
 from PIL import Image
 import numpy as np
 
-# def load_image(path, resize = None, resample = 'nearest'):
-#     assert type(path) == str, "path to images must be string"
+def load_image(path, resize = None, resample = 'nearest'):
+    """
+    path is path to image
+    resize is image size after resize, (w, h)
+    resample is method of resize, Another call is interpolation
+    """
+    assert type(path) == str, "path to images must be string"
 
-#     BGR = cv2.imread(path)
-#     out_img = cv2.cvtColor(BGR, cv2.COLOR_BGR2RGB)
-#     if resize is not None:
-#         assert type(resize) == tuple, "resize must be tuple ex:(width, high)"
-
-#         if resample == 'nearest':
-#             _interpolation = cv2.INTER_NEAREST
-#         elif resample == 'bilinear':
-#             _interpolation = cv2.INTER_LINEAR
-#         elif resample == 'bicubic':
-#             _interpolation = cv2.INTER_CUBIC
-#         elif resample == 'lanczos':
-#             _interpolation = cv2.INTER_LANCZOS4
-#         else:
-#             _interpolation = cv2.INTER_AREA
-        
-#         out_img = cv2.resize(out_img, (resize[0],resize[1]), interpolation = _interpolation)
-        
-#     return out_img
-
-def load_image(path, resize=None, resample = 'nearest'):
-    img = Image.open(path)
-    img_copy = img.copy()
+    BGR = cv2.imread(path)
+    out_img = cv2.cvtColor(BGR, cv2.COLOR_BGR2RGB)
     if resize is not None:
         assert type(resize) == tuple, "resize must be tuple ex:(width, high)"
 
         if resample == 'nearest':
-            _interpolation = Image.NEAREST
+            _interpolation = cv2.INTER_NEAREST
         elif resample == 'bilinear':
-            _interpolation = Image.BILINEAR
+            _interpolation = cv2.INTER_LINEAR
         elif resample == 'bicubic':
-            _interpolation = Image.BICUBIC
+            _interpolation = cv2.INTER_CUBIC
         elif resample == 'lanczos':
-            _interpolation = Image.LANCZOS
+            _interpolation = cv2.INTER_LANCZOS4
+        else:
+            _interpolation = cv2.INTER_AREA
         
-        out_img = img_copy.resize(resize, resample = _interpolation)
+        out_img = cv2.resize(out_img, (resize[0],resize[1]), interpolation = _interpolation)
         
     return out_img
+
+# def load_image(path, resize=None, resample = 'nearest'):
+#     img = Image.open(path)
+#     img_copy = img.copy()
+#     if resize is not None:
+#         assert type(resize) == tuple, "resize must be tuple ex:(width, high)"
+
+#         if resample == 'nearest':
+#             _interpolation = Image.NEAREST
+#         elif resample == 'bilinear':
+#             _interpolation = Image.BILINEAR
+#         elif resample == 'bicubic':
+#             _interpolation = Image.BICUBIC
+#         elif resample == 'lanczos':
+#             _interpolation = Image.LANCZOS
+        
+#         out_img = img_copy.resize(resize, resample = _interpolation)
+        
+#     return out_img
 
 def image_to_array(img):
     out_arr = np.asarray(img, dtype='float32')
@@ -54,7 +59,8 @@ def image_to_array(img):
     
     return out_arr
 
-def preprocessing_img(in_arr):
+def norm_img(in_arr):
+    #caffe
     out_arr = in_arr[..., ::-1]
 
     #input_img /= 127.5
@@ -67,3 +73,6 @@ def preprocessing_img(in_arr):
     out_arr[..., 2] -= mean[2]
 
     return out_arr
+
+if __name__ == "__main__":
+    pass
