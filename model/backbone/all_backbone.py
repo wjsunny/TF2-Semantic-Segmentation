@@ -4,7 +4,7 @@ from .vgg16 import vgg16
 
 class BackbonesFactory:
     model = {
-        'vgg16': vgg16
+        'vgg16': vgg16()
     }
     feature_layers = {
         'vgg16': ('block1_pool', 'block2_pool', 'block3_pool', 'block4_pool', 'block5_pool')
