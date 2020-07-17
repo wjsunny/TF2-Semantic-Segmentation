@@ -9,7 +9,7 @@ URL_WEIGHTS_NO_TOP = 'https://github.com/fchollet/deep-learning-models/releases/
 
 
 def vgg16(classes = 1000, input_shape=(224, 224, 3), include_top = True, pretrained = 'imagenet'):
-    inputs = layers.Input(shape = input_shape)
+    inputs = tf.keras.Input(shape = input_shape)
     #Block 1
     x = layers.Conv2D(64, (3,3), activation = 'relu', padding = 'same', name = 'block1_conv1', data_format = IMAGE_FORMAT)(inputs)
     x = layers.Conv2D(64, (3,3), activation = 'relu', padding = 'same', name = 'block1_conv2', data_format = IMAGE_FORMAT)(x)
