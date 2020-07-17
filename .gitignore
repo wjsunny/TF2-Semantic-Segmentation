@@ -5,3 +5,4 @@
 /__pycache__
 /crop_images.py
 /dataset_test
+/preprocessing_img.py
