@@ -12,7 +12,7 @@ from tensorflow.keras.applications.vgg16 import VGG16
 
 image = load_image('./images/som2.jpg', resize = (224, 224))
 image = image_to_array(image)
-image = preprocessing_img(image)
+image = norm_img(image)
 
 
 model_f = Backbones.get_encoder(name = 'vgg16')
