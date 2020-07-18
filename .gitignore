@@ -5,3 +5,5 @@
 /__pycache__
 /crop_images.py
 /dataset_test
+/data_loader_1.py
+/test_numpy.py
