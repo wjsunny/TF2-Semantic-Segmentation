@@ -133,21 +133,23 @@ def preprocessing(img, mask, n_classes):
 
 
 if __name__ == "__main__":
-    img_dir = './images/mask_test_rm_cmap/mask_test.png'
-    mask_dir = './images/mask_test'
+    # img_dir = './images/mask_test_rm_cmap/mask_test.png'
+    # mask_dir = './images/mask_test'
+    img_dir = '/home/wjsunny/workspace/JPEGImages_crop'
 
+    mask_dir = '/home/wjsunny/workspace/fc_h15m_voc/SegmentationClassPNG_crop'
     make_remove_cmap(mask_dir)
     
-    im_cv = cv2.imread(img_dir, 1)
-    print(im_cv.shape)
-    cv2.imshow('image',im_cv)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+    # im_cv = cv2.imread(img_dir, 1)
+    # print(im_cv.shape)
+    # cv2.imshow('image',im_cv)
+    # cv2.waitKey(0)
+    # cv2.destroyAllWindows()
 
     # pil = Image.open(img_dir)
     # pil.show()
     # pil_np = np.array(pil)
     # print(pil_np.shape)
-    seg_img = load_mask(img_dir)
-    seg_arr = mask_to_array(seg_img, 6)
-    print(seg_arr.shape)
+    # seg_img = load_mask(img_dir)
+    # seg_arr = mask_to_array(seg_img, 6)
+    # print(seg_arr.shape)
