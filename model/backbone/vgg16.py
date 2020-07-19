@@ -1,15 +1,12 @@
 from __future__ import absolute_import, division, print_function
 import tensorflow as tf
 from tensorflow.keras import layers
-import config
-
-IMAGE_FORMAT = config.IMAGE_ORDERING
 
 URL_WEIGHTS = 'https://github.com/fchollet/deep-learning-models/releases/download/v0.1/vgg16_weights_tf_dim_ordering_tf_kernels.h5'
 URL_WEIGHTS_NO_TOP = 'https://github.com/fchollet/deep-learning-models/releases/download/v0.1/vgg16_weights_tf_dim_ordering_tf_kernels_notop.h5'
 
 
-def vgg16(classes = 1000, input_shape=(224, 224, 3), include_top = True, pretrained = 'imagenet'):
+def vgg16(classes = 1000, input_shape=(224, 224, 3), include_top = True, pretrained = 'imagenet', IMAGE_FORMAT = 'channels_last'):
     inputs = tf.keras.Input(shape = input_shape)
     #Block 1
     x = layers.Conv2D(64, (3,3), activation = 'relu', padding = 'same', name = 'block1_conv1', data_format = IMAGE_FORMAT)(inputs)
@@ -50,7 +47,7 @@ def vgg16(classes = 1000, input_shape=(224, 224, 3), include_top = True, pretrai
     if pretrained == 'imagenet':
         if include_top:
             weights_path = tf.keras.utils.get_file('vgg16_weights_tf_dim_ordering_tf_kernels.h5', URL_WEIGHTS, cache_dir = './model/backbone')
-            print(weights_path)
+            #print(weights_path)
             model.load_weights(weights_path)
         else:
             weights = tf.keras.utils.get_file('vgg16_weights_tf_dim_ordering_tf_kernels_notop.h5', URL_WEIGHTS_NO_TOP, cache_dir = './model/backbone')
