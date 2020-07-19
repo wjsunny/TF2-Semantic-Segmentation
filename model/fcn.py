@@ -1,12 +1,11 @@
 from __future__ import absolute_import, division, print_function
-from .backbone.all_backbone import Backbones
+from model.backbone.all_backbone import Backbones
 from tensorflow.keras import layers
 import tensorflow as tf
 
-IMAGE_FORMAT = 'channels_last'
 
-def fcn_32(classes, backbone_name='vgg16', input_shape=(224,224)):
-    backbone = Backbones.get_encoder(name = backbone_name)
+def fcn_32(classes, backbone_name='vgg16', input_shape=(224,224,3), IMAGE_FORMAT = 'channels_last'):
+    backbone = Backbones.get_encoder(name = backbone_name)(classes=classes, input_shape=input_shape, include_top=False)
     input = backbone.input
     x = backbone.output
     
