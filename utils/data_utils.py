@@ -14,7 +14,7 @@ class Dataset:
 
         self.name_img = os.listdir(img_dir)
         self.name_mask = os.listdir(mask_dir)
-        assert self.name_img == self.name_mask, "name image and mask must be same"
+        #assert self.name_img[] == self.name_mask[], "name image and mask must be same"
 
         self.images = [os.path.join(img_dir, _name_img) for _name_img in self.name_img]
         self.masks = [os.path.join(mask_dir, _name_mask) for _name_mask in self.name_mask]
