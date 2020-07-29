@@ -1,11 +1,11 @@
 from tensorflow.keras.utils import Sequence
 import numpy as np
 import os, sys, inspect
-currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-parentdir = os.path.dirname(currentdir)
-sys.path.insert(0,parentdir) 
+# currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+# parentdir = os.path.dirname(currentdir)
+# sys.path.insert(0,parentdir) 
 import config
-from utils.utils import load_mask, load_image
+from utils import load_mask, load_image
 
 class Dataset:
 

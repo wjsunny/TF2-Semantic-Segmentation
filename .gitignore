@@ -4,8 +4,7 @@
 /images
 /__pycache__
 /crop_images.py
-/dataset_test
+/dataset
 /data_loader_1.py
 /test_numpy.py
-/utils/__pycache__
 /model/__pycache__
