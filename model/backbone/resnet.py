@@ -3,10 +3,10 @@ import tensorflow as tf
 from tensorflow.keras import layers
 
 class BasicBlock(layers):
-    def __init__(self, k, strides, DATA_FORMAT = 'channels_last'):
+    def __init__(self, k, strides, image_format = 'channels_last'):
         super(BasicBlock, self).__init__()
 
-        if DATA_FORMAT == 'channels_last':
+        if image_format == 'channels_last':
             axis = 3
         else:
             axis = 1
@@ -35,10 +35,10 @@ class BasicBlock(layers):
         return out
     
 class Bottleneck(layers):
-    def __init__(self, k, strides, DATA_FORMAT = 'channels_last'):
+    def __init__(self, k, strides, image_format = 'channels_last'):
         super(Bottleneck, self).__init__()
 
-        if DATA_FORMAT == 'channels_last':
+        if image_format == 'channels_last':
             axis = 3
         else:
             axis = 1
