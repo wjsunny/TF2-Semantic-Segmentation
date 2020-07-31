@@ -4,12 +4,7 @@ import matplotlib.pyplot as plt
 from PIL import Image
 import numpy as np
 from tqdm import tqdm
-import os, sys, inspect
-# currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-# parentdir = os.path.dirname(currentdir)
-# print(parentdir)
-# sys.path.insert(0,parentdir) 
-import config
+import os
 
 def load_image(img_dir, resize = None, resample = 'nearest'):
     """
@@ -48,7 +43,7 @@ def img_to_array(img):
     
     return out_arr
 
-def norm_img(img_arr, mode=None, image_format=config.IMAGE_ORDERING):
+def norm_img(img_arr, mode=None, image_format="channels_last"):
     assert img_arr.ndim == 3, "ndim of input image must be 3"
     
     # RGB >> BGR
@@ -76,7 +71,7 @@ def norm_img(img_arr, mode=None, image_format=config.IMAGE_ORDERING):
 
     return out_arr
 
-def _remove_cmap(img_mask, palette=config.PALETTE):
+def _remove_cmap(img_mask, palette):
 
     mask = np.zeros((img_mask.shape[0], img_mask.shape[1]), dtype=np.uint8)
 
@@ -87,7 +82,7 @@ def _remove_cmap(img_mask, palette=config.PALETTE):
     return mask
 
 
-def make_remove_cmap(img_mask_dir):
+def make_remove_cmap(img_mask_dir, palette):
     new_mask_dir = img_mask_dir + '_rm_cmap'
     if not os.path.isdir(new_mask_dir):
         print("creating folder: ", new_mask_dir)
@@ -100,7 +95,7 @@ def make_remove_cmap(img_mask_dir):
         arr_bgr = cv2.imread(os.path.join(img_mask_dir, m_f))
         arr = cv2.cvtColor(arr_bgr, cv2.COLOR_BGR2RGB)
         arr = arr[:,:,0:3]
-        arr_2d = _remove_cmap(arr)
+        arr_2d = _remove_cmap(arr, palette)
         cv2.imwrite(os.path.join(new_mask_dir, m_f), arr_2d)
 
 def load_mask(mask_dir, resize=None):
@@ -114,7 +109,6 @@ def load_mask(mask_dir, resize=None):
 
 def mask_to_array(mask, n_classes):
 
-    #img_mask = load_mask(mask_dir, resize)
     mask_arr = np.zeros((mask.shape[0], mask.shape[1], n_classes))
     img_mask = mask[:, :, 0]
 
@@ -128,17 +122,40 @@ def preprocessing(img, mask, n_classes):
     mask = mask_to_array(mask, n_classes)
     return img, mask
 
-
-
+def verify_dataset(img_dir, mask_dir):
+    EXT_IMAGE = ['.jpg', '.jpeg', '.png']
+    EXT_MASK = ['.png']
+    img_files = []
+    mask_files = []
+    for files in os.listdir(img_dir):
+        file_name, ext = os.path.splitext(files)
+        if ext in EXT_IMAGE:
+            img_files.append((file_name, ext))
+        else:
+            print("images type unacceptable")
+            return False
+    
+    for files in os.listdir(mask_dir):
+        file_name, ext = os.path.splitext(files)
+        if ext in EXT_MASK:
+            mask_files.append((file_name, ext))
+        else:
+            print("Mask type unacceptable")
+            return False
+    
+    if not img_files == mask_files:
+        return False
+    return True
 
 
 if __name__ == "__main__":
-    # img_dir = './images/mask_test_rm_cmap/mask_test.png'
-    # mask_dir = './images/mask_test'
-    img_dir = '/home/wjsunny/workspace/JPEGImages_crop'
+    PALETTE = {(0, 0, 0) : 0, (128, 0, 0) : 1, (0, 128, 0) : 2,
+            (128, 128, 0) : 3, (0, 0, 128) : 4, (128, 0, 128) : 5}
+    img_dir = "./dataset/train"
+    mask_dir = "./dataset/trainannot"
+    print(verify_dataset(img_dir, mask_dir))
 
-    mask_dir = '/home/wjsunny/workspace/fc_h15m_voc/SegmentationClassPNG_crop'
-    make_remove_cmap(mask_dir)
+    # make_remove_cmap(mask_dir, PALETTE)
     
     # im_cv = cv2.imread(img_dir, 1)
     # print(im_cv.shape)
@@ -146,10 +163,6 @@ if __name__ == "__main__":
     # cv2.waitKey(0)
     # cv2.destroyAllWindows()
 
-    # pil = Image.open(img_dir)
-    # pil.show()
-    # pil_np = np.array(pil)
-    # print(pil_np.shape)
     # seg_img = load_mask(img_dir)
     # seg_arr = mask_to_array(seg_img, 6)
     # print(seg_arr.shape)
