@@ -8,3 +8,6 @@
 /data_loader_1.py
 /test_numpy.py
 /model/__pycache__
+split_checkpoint.py
+/checkpoint
+train.ipynb
