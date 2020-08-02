@@ -6,7 +6,7 @@ URL_WEIGHTS = 'https://github.com/fchollet/deep-learning-models/releases/downloa
 URL_WEIGHTS_NO_TOP = 'https://github.com/fchollet/deep-learning-models/releases/download/v0.1/vgg16_weights_tf_dim_ordering_tf_kernels_notop.h5'
 
 
-def vgg16(classes = 1000, input_shape=(224, 224, 3), include_top = True, pretrained = 'imagenet', image_format = 'channels_last'):
+def vgg16(n_classes = 1000, input_shape=(224, 224, 3), include_top = True, pretrained = 'imagenet', image_format = 'channels_last'):
     inputs = tf.keras.Input(shape = input_shape)
     #Block 1
     x = layers.Conv2D(64, (3,3), activation = 'relu', padding = 'same', name = 'block1_conv1', data_format = image_format)(inputs)
@@ -40,7 +40,7 @@ def vgg16(classes = 1000, input_shape=(224, 224, 3), include_top = True, pretrai
         x = layers.Flatten(data_format = image_format, name = 'flatten')(x)
         x = layers.Dense(4096, activation = 'relu', name = 'fc1')(x)
         x = layers.Dense(4096, activation = 'relu', name = 'fc2')(x)
-        x = layers.Dense(classes , activation = 'softmax', name = 'predictions')(x)
+        x = layers.Dense(n_classes , activation = 'softmax', name = 'predictions')(x)
 
     model = tf.keras.models.Model(inputs, x, name = 'vgg16')
 
