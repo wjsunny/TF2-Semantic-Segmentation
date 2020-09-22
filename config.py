@@ -1,7 +1,10 @@
-IMAGE_ORDERING = "channels_last"
-
-PALETTE = {(0, 0, 0) : 0, (128, 0, 0) : 1, (0, 128, 0) : 2,
-            (128, 128, 0) : 3, (0, 0, 128) : 4, (128, 0, 128) : 5}
-
-NAME_CLASSES = {0 : 'background', 1 : 'cassava', 2 : 'weed', 3 : 'pipe',
-                4 : 'soid', 5 : 'other'}
+IMAGE_FORMAT = "channels_last"
+BACKBONE = 'vgg16'
+BATCH_SIZE = 1
+LR = 0.00001
+EPOCHS = 100
+OPTIMIZER = "adam"
+INPUT_SHAPE = (360, 480, 3) #(h,w,3) 
+NUM_CLASSES = 6
+LABEL_PATH = "F:\TF2-Semantic-Segmentation\dataset\labels.csv"
+CKP_PATH = "F:\TF2-Semantic-Segmentation\checkpoint"

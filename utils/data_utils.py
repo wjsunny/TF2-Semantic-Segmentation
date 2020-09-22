@@ -1,7 +1,7 @@
 from tensorflow.keras.utils import Sequence
 import numpy as np
 import os
-from utils import load_mask, load_image
+from utils.utils import load_mask, load_image
 
 class Dataset:
 
@@ -10,11 +10,11 @@ class Dataset:
 
         self.name_img = os.listdir(img_dir)
         self.name_mask = os.listdir(mask_dir)
-        #assert self.name_img[] == self.name_mask[], "name image and mask must be same"
 
         self.images = [os.path.join(img_dir, _name_img) for _name_img in self.name_img]
         self.masks = [os.path.join(mask_dir, _name_mask) for _name_mask in self.name_mask]
-        self.classes = classes
+        self.n_classes = len(classes[0])
+        self.class_colors = classes[1]
         self.resize = resize
         self.resample = resample
         self.augmentation = augmentation
@@ -24,7 +24,6 @@ class Dataset:
         return len(self.name_img)
     
     def __getitem__(self, i):
-        n_classes = len(self.classes)
         image = load_image(self.images[i], resize=self.resize, resample=self.resample)
         mask = load_mask(self.masks[i], resize=self.resize)
         
@@ -32,7 +31,7 @@ class Dataset:
             image, mask = self.augmentation(image=image, mask=mask)
         
         if self.preprocessing is not None:
-            image, mask = self.preprocessing(image=image, mask=mask, n_classes=n_classes)
+            image, mask = self.preprocessing(image=image, mask=mask, class_colors=self.class_colors)
         
         return image, mask
 

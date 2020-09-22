@@ -1,9 +1,9 @@
 from __future__ import absolute_import, division, print_function
 import tensorflow as tf
-from utils import load_image, norm_img, img_to_array
+from utils.utils import load_image, norm_img, img_to_array
 import cv2
 #from model.backbone import vgg16,vgg16_subclass
-from model.backbone.all_backbone import Backbones
+from backbone.all_backbone import Backbones
 import numpy as np
 import matplotlib.pyplot as plt
 from tensorflow.keras.applications.vgg16 import decode_predictions
